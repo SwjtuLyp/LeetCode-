@@ -1,0 +1,125 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+        //一个数记录起点，一个数记录终点
+        //在的到起点的情况下找寻包含起点的区间，如果没有记录自己本身
+        //在起点和终点之间的区间全部不入向量
+        //在得到终点的情况下找包含终点的区间，如果没有记录自己本身
+        vector<Interval> ans;
+        int begin;
+        int end;
+        int length=intervals.size();
+        int k=newInterval.start;
+        int l=newInterval.end;
+        if(length==0)
+        {
+            ans.push_back(newInterval);
+            return ans;
+        }
+        for(int i=0;i<length;i++)
+        {
+            if(k<=intervals[i].start)
+            {
+                int j=i;
+                while(true){
+                    if(l>=intervals[j].start){
+                        if(l<=intervals[j].end){
+                            Interval a;
+                            a.start=k;
+                            a.end=intervals[j].end;
+                            ans.push_back(a);
+                            i=j+1;
+                            for(;i<length;i++)
+                                ans.push_back(intervals[i]);
+                            return ans;
+                        }
+                        else{
+                            if(j==length-1)
+                            {
+                                Interval a;
+                                a.start=k;
+                                a.end=l;
+                                ans.push_back(a);
+                                return ans;   
+                            }
+                            else
+                                j++;
+                        }                            
+                    }
+                    else{
+                        Interval a;
+                        a.start=k;
+                        a.end=l;
+                        ans.push_back(a);
+                        i=j;
+                        for(;i<length;i++)
+                            ans.push_back(intervals[i]);
+                        return ans;
+                    }
+                }
+            }
+            else
+            {
+                int j=i;
+                if(k<=intervals[i].end)
+                {
+                    while(true)
+                    {
+                        if(l>=intervals[j].start)
+                        {
+                            if(l<=intervals[j].end){
+                                Interval a;
+                                a.start=intervals[i].start;
+                                a.end=intervals[j].end;
+                                ans.push_back(a);
+                                i=j+1;
+                                for(;i<length;i++)
+                                    ans.push_back(intervals[i]);
+                                return ans;
+                            }
+                            else
+                            {
+                                if(j==length-1)
+                                {
+                                    Interval a;
+                                    a.start=intervals[i].start;
+                                    a.end=l;
+                                    ans.push_back(a);
+                                    return ans;
+                                }
+                                else
+                                    j++;
+                            }
+                        }
+                        else{
+                            Interval a;
+                            a.start=intervals[i].start;
+                            a.end=l;
+                            ans.push_back(a);
+                            i=j;
+                            for(;i<length;i++)
+                                ans.push_back(intervals[i]);
+                            return ans;
+                        }
+                    }
+                }
+                else{
+                    ans.push_back(intervals[i]);
+                }
+            }
+            
+        }
+        //如果这个时候才返回，说明新的组是加到最后
+        ans.push_back(newInterval);
+        return ans;
+    }
+};

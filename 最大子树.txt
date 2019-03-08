@@ -1,0 +1,23 @@
+int max=INT_MIN;
+    int dfs(TreeNode *root){
+        int sum=0;
+        int a=0;
+        int 
+        if(root->left){
+            a=dfs(root->left);
+            sum+=a;
+        }
+        if(root->right){
+            a=dfs(root->right);
+            sum+=a;
+        }
+        sum+=root->val;
+        if(sum>max)
+            max=sum;
+        return sum>0?sum:0;
+    }
+    int maxPathSum(TreeNode* root) {
+        //这道题有意思
+        dfs(root);
+        return max;
+    }

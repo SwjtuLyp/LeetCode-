@@ -1,0 +1,70 @@
+vector<vector<int>> generateMatrix(int n) {
+        
+        vector<vector<int>> ans;
+        if(n==0)
+            return ans;
+        int A[n][n];
+        for(int i=0;i<n;i++)
+            for(int j=0;j<n;j++)
+                A[i][j]=0;
+        int i=0,j=0;
+        int count=0;
+        int direct=0;
+        while(count<n*n){
+             if(direct==0){
+                count++;
+                A[i][j]=count;
+                if(j+1<n&&A[i][j+1]==0){
+                    j++;
+                }
+                else{
+                    i++;
+                    direct=1;
+                }
+                continue;
+            }
+            if(direct==1){
+                count++;
+                A[i][j]=count;
+                if(i+1<n&&A[i+1][j]==0){
+                    i++;
+                }
+                else{
+                    j--;
+                    direct=2;
+                }
+                continue;
+            }
+            if(direct==2){
+                count++;
+                A[i][j]=count;
+                if(j>0&&A[i][j-1]==0){
+                    j--;
+                }
+                else{
+                    i--;
+                    direct=3;
+                }
+                continue;
+            }
+            if(direct==3){
+                count++;
+                A[i][j]=count;
+                if(i>0&&A[i-1][j]==0){
+                    i--;
+                }
+                else{
+                    j++;
+                    direct=0;
+                }
+                continue;
+            }
+        }
+        for(int i=0;i<n;i++){
+            vector<int >a;
+            for(int j=0;j<n;j++)
+                a.push_back(A[i][j]);
+            ans.push_back(a);
+        }
+        return ans;
+    }

@@ -1,0 +1,22 @@
+int max,min;
+    TreeNode* dfs(TreeNode* root){
+        int cur=root->val;
+        if(cur>=min&&cur<=max){
+            return root;
+        }
+        if(cur>max)
+            return dfs(root->left);
+        if(cur<min)
+            return dfs(root->right);
+        
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        max=p->val;
+        min=q->val;
+        if(max<min){
+            int temp=max;
+            max=min;
+            min=temp;
+        }
+        return dfs(root);
+    }

@@ -1,0 +1,17 @@
+ bool judgeSymmetric(TreeNode* root1,TreeNode* root2){
+        if(!root1&&!root2)
+            return true;
+        else{
+            if(root1&&root2&&root1->val==root2->val&&judgeSymmetric(root1->left,root2->right)&&judgeSymmetric(root2->left,root1->right))
+                return true;
+            else
+                return false;
+        }
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root==NULL)
+            return true;
+        else{
+            return judgeSymmetric(root->left,root->right);
+        }
+    }

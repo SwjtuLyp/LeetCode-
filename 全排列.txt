@@ -1,0 +1,28 @@
+vector<vector<int>> ans;
+    void dfs(int i,int s[],vector<int> a,int l,vector<int> nums)
+    {
+        if(a.size()==l)
+        {
+            ans.push_back(a);
+            return;
+        }
+        else{
+            for(int i=0;i<l;i++)
+            {
+                if(s[i]==0){
+                    s[i]=1;
+                    a.push_back(nums[i]);
+                    dfs(i+1,s,a,l,nums);
+                    a.pop_back();
+                    s[i]=0;
+                }
+            }
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        int l=nums.size();
+        int s[l]={0};//标志数组
+        vector<int> a;
+        dfs(0,s,a,l,nums);
+        return ans;
+    }

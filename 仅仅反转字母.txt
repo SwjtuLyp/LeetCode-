@@ -1,0 +1,19 @@
+string reverseOnlyLetters(string S) {
+        string ans=S;
+        if(S.length()==0)
+            return ans;
+        int j=0;
+        for(int i=S.length()-1;i>=0;i--){
+            if(('a'<=S[i]&&S[i]<='z')||('A'<=S[i]&&S[i]<='Z')){
+                while(!(('a'<=ans[j]&&ans[j]<='z')||('A'<=ans[j]&&ans[j]<='Z'))){
+                    if(j<S.length()-1)
+                        j++;
+                    else{
+                        return ans;
+                    }   
+                }
+                ans[j++]=S[i];
+            }
+        }
+        return ans;
+    }

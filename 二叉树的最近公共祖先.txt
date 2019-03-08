@@ -1,0 +1,33 @@
+TreeNode* ans;
+    TreeNode* p;
+    TreeNode* q;
+    int dfs(TreeNode* root){
+        if(root==NULL){
+            return 0;
+        }
+        if(root==p||root==q){
+            if(dfs(root->left)||dfs(root->right))
+                ans=root;
+        }else{
+            int a=dfs(root->left);
+            int b=dfs(root->right);
+            if(a&&b){
+                ans=root;
+                return 0;
+            }
+            else{
+                if(a||b)
+                    return 1;
+                else{
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        this->p=p;
+        this->q=q;
+        dfs(root);
+        return ans;
+    }

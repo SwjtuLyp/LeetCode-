@@ -1,0 +1,11 @@
+uint32_t reverseBits(uint32_t n) {
+        int result = 0;
+        int i = 0;
+        while(i<32){
+            int temp = n&1;//获取最后一位
+            n = n>>1;//然后将n右移
+            result = result<<1|temp;//牛批！temp为0，则最后一位也是0，是1，最后一位也为1；
+            i++;
+        }
+        return result;
+    }

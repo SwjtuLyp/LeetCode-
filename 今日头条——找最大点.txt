@@ -1,0 +1,44 @@
+#include<vector>
+#include<iostream>
+#include<algorithm>
+#include<stack>
+using namespace std; 
+struct position{
+	int x,y;
+};
+bool position_compare(position a,position b){
+	return a.x<b.x;
+}
+int main(){
+	vector<position>res;
+	int N;
+	cin>>N;
+	stack<position>st;
+	while(N--){
+		position s;
+		scanf("%d %d",&s.x,&s.y);
+		res.push_back(s);
+	}
+	sort(res.begin(),res.end(),position_compare);
+	int max_height=res[res.size()-1].y;
+	int max_x=res[res.size()-1].x;
+	for(int i=res.size()-1;i>=0;i--){
+		if(max_x==res[i].x){
+			st.push(res[i]);
+			if(max_height<=res[i].y)
+				max_height=res[i].y;
+			continue;
+		}
+		if(max_height<=res[i].y){
+			max_height=res[i].y;
+			st.push(res[i]);
+		}
+	}
+	while(!st.empty()){
+		position a=st.top();
+		st.pop();
+		printf("%d %d\n",a.x,a.y);
+
+	}
+	return 0;
+}

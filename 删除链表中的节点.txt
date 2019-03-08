@@ -1,0 +1,10 @@
+ void deleteNode(ListNode* node) {
+        ListNode* end;
+        while(node->next){
+            node->val=node->next->val;
+            end=node;
+            node=node->next;
+        }
+        end->next=NULL;
+        //delete(node);
+    }

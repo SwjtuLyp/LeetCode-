@@ -1,0 +1,40 @@
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>>ans;
+        
+        vector<TreeNode*>tr;
+        if(root==NULL)
+            return ans;
+        int count=0;
+        tr.push_back(root);
+        while(tr.size()){
+            if(!(count%2)){
+                vector<int>res;
+                vector<TreeNode*>t;
+                for(int i=tr.size()-1;i>=0;i--){
+                    res.push_back(tr[i]->val);
+                    if(tr[i]->left)
+                        t.push_back(tr[i]->left);
+                    if(tr[i]->right)
+                        t.push_back(tr[i]->right);
+                    
+                }
+                tr=t;
+                ans.push_back(res);
+            }
+            else{
+                vector<int>res;
+                vector<TreeNode*>t;
+                for(int i=tr.size()-1;i>=0;i--){
+                    res.push_back(tr[i]->val);
+                    if(tr[i]->right)
+                        t.push_back(tr[i]->right);
+                    if(tr[i]->left)
+                        t.push_back(tr[i]->left);
+                }
+                ans.push_back(res);
+                tr=t;
+            }
+            count++;
+        }
+        return ans;
+    }

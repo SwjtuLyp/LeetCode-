@@ -1,0 +1,31 @@
+void MakeTreeNode(TreeNode* root,vector<int>& nums,int start,int end){
+        if(start>end)
+            return;
+        if(start==end){
+            TreeNode* x=new TreeNode(nums[start]);
+            if(nums[start]>root->val)
+                root->right=x;
+            else
+                root->left=x;
+        }
+        if(start<end){
+            TreeNode* x=new TreeNode(nums[(start+end)/2]);
+            if(nums[(start+end)/2]>root->val){
+                root->right=x;
+            }
+            else
+                root->left=x;
+            MakeTreeNode(x,nums,start,(start+end)/2-1);
+            MakeTreeNode(x,nums,(start+end)/2+1,end);
+        }
+            
+    }
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        //¼òµ¥
+        if(nums.size()==0)
+            return NULL;
+        TreeNode* root=new TreeNode(nums[nums.size()/2]);
+        MakeTreeNode(root,nums,0,nums.size()/2-1);
+        MakeTreeNode(root,nums,nums.size()/2+1,nums.size()-1);
+        return root;
+    }

@@ -1,0 +1,30 @@
+int max=INT_MIN;
+    int dfs(TreeNode *root){
+        //这道题还是很简单，判断一下路径以当前节点为顶点
+        int sum=0;
+        int a=0;
+        int b=0;
+        //以当前节点为顶点
+        if(root->left){
+            a=dfs(root->left);
+            sum+=a;
+        }
+        if(root->right){
+            b=dfs(root->right);
+            sum+=b;
+        }
+        sum+=root->val;
+        if(sum>max)
+            max=sum;
+        //cout<<"a:"<<a<<" b:"<<b<<" sum:"<<sum<<" max:"<<max<<endl;
+        if(a>b)
+            return root->val+a>0?root->val+a:0;
+        else
+            return root->val+b>0?root->val+b:0;
+        //return sum>0?sum:0;
+    }
+    int maxPathSum(TreeNode* root) {
+        //这道题有意思
+        dfs(root);
+        return max;
+    }

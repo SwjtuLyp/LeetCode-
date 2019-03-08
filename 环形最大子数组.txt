@@ -1,0 +1,36 @@
+int max(int a,int b){
+        return a>b?a:b;
+    }
+    int maxSubarraySumCircular(vector<int>& A) {
+        int n=A.size();
+        vector<int>B;
+        int sum=0;
+        int max1=INT_MIN;
+        //先计算不跨界的最大值
+        for(int i=0;i<n;i++){
+            if(sum<0)
+                sum=0;
+            sum+=A[i];
+            max1=max(max1,sum);
+        }
+        
+        //计算跨界的,
+        int max2=INT_MIN;
+        for(int i=0;i<n;i++){
+            B.push_back(-A[i]);    
+        }
+        sum=0;
+        int sum1=0;
+        int min_max=INT_MIN;
+        for(int i=0;i<n;i++){
+            sum+=A[i];
+            if(sum1<0)
+                sum1=0;
+            sum1+=B[i];
+            min_max=max(min_max,sum1);
+        }
+        max2=sum+min_max;
+        if(max2==0)
+            return max1;
+        return max(max1,max2);
+    }

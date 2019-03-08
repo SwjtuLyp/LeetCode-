@@ -1,0 +1,19 @@
+bool hasCycle(ListNode *head) {
+        //一个指针跑得快，一个跑得慢，如果有环终究会碰上，如果碰到NULL，直接退出
+        int i=0;
+        if(head==NULL)
+            return false;
+        ListNode *p1=head;
+        ListNode *p2=head;
+        while(true){
+            if(i%2)
+                p2=p2->next;
+            p1=p1->next;
+            i++;
+            if(p1==p2)
+                return true;
+            if(p1==NULL)
+                return false;
+            
+        }
+    }

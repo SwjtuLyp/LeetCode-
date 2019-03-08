@@ -1,0 +1,38 @@
+vector<vector<string>>ans;
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        int i,j,k;
+        if(strs.size()==0)
+            return ans;
+        for(i=0;i<strs.size();i++){
+            if(i==0)
+            {   
+                vector<string >a;
+                a.push_back(strs[0]);
+                ans.push_back(a);
+            }
+            else 
+                for(j=0;j<ans.size();j++){
+                    int A[256]={0};
+                    for(k=0;k<ans[j][0].length();k++){
+                        A[ans[j][0][k]]++;
+                    }
+                    for(k=0;k<strs[i].length();k++){
+                        A[strs[i][k]]--;
+                    }
+                    for(k=0;k<256;k++){
+                        if(A[k]!=0)
+                            break;
+                    }
+                    if(k==256){
+                        ans[j].push_back(strs[i]);
+                        break;
+                    }
+                }
+            if(j==ans.size()){
+                vector<string> s;
+                s.push_back(strs[i]);
+                ans.push_back(s);
+            }
+        }
+        return ans;
+    }

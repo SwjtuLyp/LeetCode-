@@ -1,0 +1,80 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode* pNew=NULL;
+    struct ListNode* pHead=NULL;
+    struct ListNode* p1=NULL;
+    struct ListNode* head1=l1;
+    struct ListNode* head2=l2;
+    int ln=0;//进位值
+    //要用链表的方式去解决
+    
+    while(head1!=NULL&&head2!=NULL)
+    {
+        if(pNew==NULL)
+        {
+            pNew=(struct ListNode*)malloc(sizeof(struct ListNode));
+            pNew->val=(head1->val+head2->val+ln)%10;
+            pNew->next=NULL;
+            pHead=pNew;
+        }
+        else
+        {
+            p1=(struct ListNode*)malloc(sizeof(struct ListNode));
+            p1->val=(head1->val+head2->val+ln)%10;
+            p1->next=NULL;
+            pNew->next=p1;
+            pNew=p1;
+        }
+
+        if(head1->val+head2->val+ln>=10)
+            ln=1;
+        else
+            ln=0;
+        head1=head1->next;
+        head2=head2->next;
+    }
+    if((head1!=NULL)||(head2!=NULL))
+    {
+        while(head1!=NULL)
+        {
+            p1=(struct ListNode*)malloc(sizeof(struct ListNode));
+            p1->val=(head1->val+ln)%10;
+            p1->next=NULL;
+            pNew->next=p1;
+            pNew=p1;
+            if(head1->val+ln>=10)
+                ln=1;   
+            else
+                ln=0;
+            head1=head1->next;
+        }
+        while(head2!=NULL)
+        {
+            p1=(struct ListNode*)malloc(sizeof(struct ListNode));
+            p1->val=(head2->val+ln)%10;
+            p1->next=NULL;
+            pNew->next=p1;
+            if(head2->val+ln>=10)
+                ln=1;   
+            else
+                ln=0;
+            head2=head2->next;
+            pNew=p1;
+        }
+    }
+    if(ln==1)
+    {
+        p1=(struct ListNode*)malloc(sizeof(struct ListNode));
+        p1->val=1;
+        p1->next=NULL;
+        pNew->next=p1;
+        pNew=p1;
+     }
+    return pHead;
+}

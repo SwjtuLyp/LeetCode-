@@ -1,0 +1,16 @@
+int max=0;
+    void dfs(TreeNode *root,int n){
+        n++;
+        if(n>max)
+            max=n;
+        if(root->left)
+            dfs(root->left,n);
+        if(root->right)
+            dfs(root->right,n);
+    }
+    int maxDepth(TreeNode* root) {
+        if(!root)
+            return 0;
+        dfs(root,0);
+        return max;
+    }

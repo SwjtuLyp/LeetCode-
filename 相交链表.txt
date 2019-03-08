@@ -1,0 +1,41 @@
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        //这道题思路很简单，先找长度差
+        //然后让唱的先把长的部分走完，然后开始一起走，如果节点相同说明相交于此处，返回该节点的值；
+        ListNode *p=headA;
+        int lengthA=0;
+        while(p){
+            lengthA++;
+            p=p->next;
+        }
+        p=headB;
+        int lengthB=0;
+        while(p){
+            lengthB++;
+            p=p->next;
+        }
+        if(lengthA==0||lengthB==0)
+            return NULL;
+        if(lengthA>lengthB){
+            int i=0;
+            while(i<lengthA-lengthB){
+                headA=headA->next;
+                i++;
+            }
+        }
+        else{
+            int i=0;
+            while(i<lengthB-lengthA){
+                headB=headB->next;
+                i++;
+            }
+        }
+        while(headA&&headB){
+            if(headA==headB)
+                return headA;
+            else{
+                headA=headA->next;
+                headB=headB->next;
+            }
+        }
+        return NULL;
+    }

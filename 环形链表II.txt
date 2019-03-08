@@ -1,0 +1,44 @@
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        int i=0;
+        int n=0;
+        if(head==NULL)
+            return NULL;
+        ListNode* p1=head;
+        ListNode* p2=head;
+        bool l=true;
+        while(true){
+            if(i%2)
+                p2=p2->next;
+            p1=p1->next;
+            if(p1==NULL)
+                return NULL;
+            if(p1==p2){
+                p1=p1->next;
+                n++;
+                while(true){
+                    if(p1!=p2){
+                        p1=p1->next;
+                        n++;
+                    }
+                    else
+                        break;
+                }
+                break;
+            }
+            i++;
+        }
+        ListNode*p3=head;
+        ListNode*p4=head;
+        do{
+            p3=p3->next;
+            n--;
+        }while(n>0);
+        while(p3!=p4){
+            p3=p3->next;
+            p4=p4->next;
+        }
+        return p3;
+    }
+};

@@ -1,0 +1,19 @@
+int maxProduct(vector<int>& nums) {
+        //动态规划
+        //添加一个数，保存最大正值，和最小负值
+        int n=nums.size();
+        vector<int>maxnums(n,0);
+        vector<int>minnums(n,0);
+        int maxres=INT_MIN;
+        for(int i=0;i<nums.size();i++){
+            if(i==0){
+                maxnums[i]=nums[i];
+                minnums[i]=nums[i];
+            }else{
+                maxnums[i]=max(maxnums[i-1]*nums[i],max(minnums[i-1]*nums[i],nums[i]));
+                minnums[i]=min(maxnums[i-1]*nums[i],min(minnums[i-1]*nums[i],nums[i]));
+            }
+            maxres=max(maxnums[i],maxres);
+        }
+        return maxres;
+    }

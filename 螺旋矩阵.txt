@@ -1,0 +1,73 @@
+//这里要注意，对于大小未知的数组，直接用类似A[m][n]={{0}}来初始化，得到的数组并不是全为0
+vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int m=matrix.size();
+        vector<int> ans;
+        if(m==0)
+            return ans;
+        int n=matrix[0].size();
+        int A[m][n];
+        for(int i=0;i<m;i++)
+            for(int j=0;j<n;j++)
+                A[i][j]=0;
+        int i=0,j=0;
+        int count=0;
+        int direct=0;//0右1下，2左3上
+        while(count<m*n){
+            if(direct==0){
+                count++;
+                ans.push_back(matrix[i][j]);
+                A[i][j]=1;
+                if(j+1<n&&A[i][j+1]==0){
+                    //cout<<i<<" "<<j<<endl;
+                    j++;
+                }
+                else{
+            
+                    i++;
+                    direct=1;
+                }
+                continue;
+            }
+            if(direct==1){
+                count++;
+                ans.push_back(matrix[i][j]);
+                A[i][j]=1;
+                if(i+1<m&&A[i+1][j]==0){
+                    i++;
+                }
+                else{
+                    if(j>0)
+                    j--;
+                    direct=2;
+                }
+                continue;
+            }
+            if(direct==2){
+                count++;
+                ans.push_back(matrix[i][j]);
+                A[i][j]=1;
+                if(j>0&&A[i][j-1]==0){
+                    j--;
+                }
+                else{
+                    i--;
+                    direct=3;
+                }
+                continue;
+            }
+            if(direct==3){
+                count++;
+                ans.push_back(matrix[i][j]);
+                A[i][j]=1;
+                if(i>0&&A[i-1][j]==0){
+                    i--;
+                }
+                else{
+                    j++;
+                    direct=0;
+                }
+                continue;
+            }
+        }
+        return ans;
+    }

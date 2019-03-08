@@ -1,0 +1,58 @@
+long long abs(int num)
+    {
+        long long a=num;
+        return a>0?a:-a;
+    }
+    
+    int divide(int dividend, int divisor) {
+        assert(divisor!=0);
+        bool cor;
+        long long a=1;
+        if(dividend>=0&&divisor>0||dividend<=0&&divisor<0)
+            cor=true;
+        else
+            cor=false;
+        if(dividend==0)
+            return 0;
+        //保留结果；
+        long result=0;
+        int reg;//保留m_dividend的值；
+        int count=0;
+        long long m_dividend=abs(dividend);
+        long long m_divisor=abs(divisor);
+        bool go=true;
+        if(m_dividend<m_divisor)
+            return 0;
+        while(go)
+        {
+            
+                count=-1;
+                bool l=false;//判断是否进入了下面的while循环中;
+                while(m_dividend>=m_divisor)
+                {
+                    reg=m_dividend-m_divisor;
+                    l=true;
+                    m_divisor=m_divisor<<1;
+                    count++;
+                    if(reg<abs(divisor))
+                        go=false;
+                    if(reg==abs(divisor))
+                    {   
+                        go=false;
+                        result+=1;
+                    }
+
+                }
+                m_dividend=reg;
+                m_divisor=abs(divisor);
+                if(l==true)
+                      result+=a<<count;
+            }
+        result=cor?result:-result;
+        if(result>=2147483647)
+            return 2147483647;
+        if(result<-2147483648)
+            return 2147483647;
+        else
+            return result;
+    }

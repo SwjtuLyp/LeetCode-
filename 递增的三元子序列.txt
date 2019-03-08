@@ -1,0 +1,20 @@
+ bool increasingTriplet(vector<int>& nums) {
+        int i;
+        if(nums.size()<3)
+            return false;
+        int value1=nums[0],value2=INT_MAX,value3=INT_MAX;
+        for(i=1;i<nums.size();i++){
+            if(value1>=nums[i]){
+                value1=nums[i];
+            }else{
+                if(value2>=nums[i]){
+                    value2=nums[i];
+                }
+                else{
+                    value3=nums[i];
+                    return true;
+                }
+            }
+        }
+        return false;
+    }

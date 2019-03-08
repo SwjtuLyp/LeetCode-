@@ -1,0 +1,41 @@
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int i=0;
+        int min=0;
+        int key;
+        ListNode *head=NULL,*p=NULL;;
+        head=(ListNode *)malloc(sizeof(ListNode));
+        head->next=NULL;
+        p=head;
+        bool f;
+        if(lists.size()==1)
+            return lists[0];
+        while(true){
+            i=0;
+            key=0;
+            min=INT_MAX;
+            f=false;
+            while(i<lists.size()){
+                if(lists[i]!=NULL){
+                    if(lists[i]->val<=min){
+                        min=lists[i]->val;
+                        key=i;
+                        f=true;
+                    }
+                }
+                i++;
+            }
+            if(!f)
+                break;
+            else{
+                if(lists[key]!=NULL){
+                    lists[key]=lists[key]->next;
+                }
+            }
+            ListNode *a=(ListNode*)malloc(sizeof(ListNode));
+            a->val=min;
+            a->next=NULL;
+            p->next=a;
+            p=p->next;
+        }
+        return head->next;
+    }

@@ -1,0 +1,20 @@
+ListNode* reverseList(ListNode* head) {
+        ListNode* p=head;
+        stack<ListNode*>s;
+        if(head==NULL)
+            return NULL;
+        s.push(NULL);
+        while(p!=NULL){
+            s.push(p);
+            p=p->next;
+        }
+        ListNode* p1=s.top();
+        s.pop();
+        ListNode* Head=p1;
+        while(!s.empty()){
+            p1->next=s.top();
+            s.pop();
+            p1=p1->next;
+        }
+        return Head;
+    }

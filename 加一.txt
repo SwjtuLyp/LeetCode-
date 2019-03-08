@@ -1,0 +1,17 @@
+vector<int> plusOne(vector<int>& digits) {
+        int i=digits.size()-1;
+        int l=1;
+        int x=0;
+        while(i>=0){
+            int j=digits[i];
+            x=(j+l)%10;
+            digits[i]=x;
+            if(j+l>=10)
+                i--;
+            else
+                break;
+        }
+        if(i==-1)
+            digits.insert(digits.begin(),1);
+        return digits;
+}

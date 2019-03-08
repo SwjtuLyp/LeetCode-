@@ -1,0 +1,27 @@
+ vector <int> ans;
+    stack<TreeNode*>S;
+    void pushRTreeNode(TreeNode* root)
+    {
+        TreeNode* x=root;
+        while(x)
+        {
+            S.push(x);
+            x=x->left;
+        }
+    }
+    vector<int> inorderTraversal(TreeNode* root) {
+        //迭代算法完成稍有难度
+        TreeNode* x=root;
+        while(true)
+        {
+            pushRTreeNode(x);
+            if(S.empty())
+                return ans;
+            x=S.top();
+            S.pop();
+            //访问该节点
+            ans.push_back(x->val);
+            x=x->right;
+        }
+        return ans;
+    }

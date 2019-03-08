@@ -1,0 +1,16 @@
+//戳气球，这题是动态规划中的难题了，最好能完全掌握，极大可能出现在笔试中
+int maxCoins(vector<int>& nums) {
+        int n=nums.size();
+        nums.insert(nums.begin(),1);
+        nums.push_back(1);
+        int dp[nums.size()][nums.size()]={{0}};
+        for(int len=1;len<=n;len++){
+            for(int left=1;left<=n-len+1;left++){
+                int right=left+len-1;
+                for(int j=left;j<=right;j++){
+                    dp[left][right]=max(dp[left][right],dp[left][j-1]+dp[j+1][right]+nums[j]*nums[left-1]*nums[right+1]);
+                }
+            }
+        }
+        return dp[1][n];
+    }

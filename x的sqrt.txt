@@ -1,0 +1,21 @@
+int mySqrt(int x) {
+        int i=0;
+        int j=x;
+        if(x==0)
+            return 0;
+        while(i<=j){
+            int m=i+(j-i)/2;
+            long long ans=(long long)m*m;
+            if(ans==x)
+                return m;
+            else{
+                if(ans<x){
+                    i=m+1;
+                }
+                else{
+                    j=m-1;
+                }
+            }
+        }
+        return i-1;
+    }

@@ -1,0 +1,32 @@
+    //注意剪枝！
+    vector<int>s;//用于存放值
+    void recursion(vector<vector<int>> &ans,vector<int>& candidates,int start,int target)
+    {
+        for(int i=start;i<candidates.size();i++)
+        {
+            //这里可以进行剪枝
+            while(candidates[i]==candidates[i+1])
+                i++;
+            if(target<candidates[i])
+                return;
+            if(target==candidates[i])
+            {
+                s.push_back(candidates[i]);
+                ans.push_back(s);
+                s.pop_back();
+            }
+            else
+            {
+                s.push_back(candidates[i]);
+                recursion(ans,candidates,i,target-candidates[i]);
+                s.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        //用递归，去寻找数，然后用一个栈去保存数
+        vector<vector<int>>ans;
+        sort(candidates.begin(),candidates.end());
+        recursion(ans,candidates,0,target);
+        return ans;
+    }

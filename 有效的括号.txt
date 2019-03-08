@@ -1,0 +1,64 @@
+//这里要用到栈
+//如果字符是‘(’,'[','{'入栈，如果不是将这个字符和栈顶字符比较，是否能对应，如果对应则进行下一轮比较，如果不能对应，返回false；
+//循环结束后，要判断栈是否为空，如果为空，说明匹配完全，返回true，否则返回false
+bool isValid(string s)
+    {
+        int i=0;
+        stack<char>S;
+        char c;
+        int length=s.length();
+        if(length==0)
+        {
+            return true;
+        }
+        if(length%2!=0)
+            return false;
+        else
+        {
+               while(i<length)
+               {
+                   c=s[i];
+                   if(c=='('||c=='{'||c=='[')
+                   {
+                       S.push(c);
+                       i++;
+                   }
+                   else
+                   {
+                       if(!S.empty())
+                       {
+                           if(c==')'&&S.top()=='(')
+                           {
+                               i++;
+                               S.pop();
+                           }
+                           else
+                           {
+                               if(c==']'&&S.top()=='[')
+                               {
+                                   i++;
+                                   S.pop();
+                               }
+                               else
+                               {
+                                   if(c=='}'&&S.top()=='{')
+                                   {
+                                       i++;
+                                       S.pop();
+                                   }
+                                   else
+                                       return false;
+                               }
+                          }
+                       }
+                       else
+                            return false;
+                   }
+           }
+            if(S.empty())
+                return true;
+            else
+                return false;
+       }
+        return true;
+    }

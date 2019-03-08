@@ -1,0 +1,30 @@
+int jump(vector<int>& nums) {
+        //贪心,每一步要考虑使下一步能调到最远
+        int i=0,j=0;
+        int ans=0;
+        int length=nums.size();
+        if(length==1)
+            return ans;
+        while(i<length)
+        {
+            int max=0;
+            int k=i+1;//标志
+            if(i+nums[i]>=length-1)
+            {
+                ans++;
+                return ans;
+            }
+            else
+                for(j=i+1;j<=i+nums[i];j++)
+                {
+                    if(nums[j]+j-i>=max)
+                    {
+                        max=nums[j]+j-i;
+                        k=j;
+                    }
+                }
+            i=k;
+            ans++;
+        }
+        return ans;
+    }

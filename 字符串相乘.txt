@@ -1,0 +1,53 @@
+string multiply(string num1, string num2) {
+        string ans="";
+        //首先从高位开始乘，乘完后加上
+        if(num1=="0"||num2=="0")
+            return "0";
+        int i=0;
+        int sum;
+        reverse(num1.begin(),num1.end());
+        while(i<num2.length()){
+            string s="";
+            int k=i+1;
+            while(k<num2.length()){
+                s+='0';
+                k++;
+            }
+            int l=0;//保存每次乘积的进位信息
+            int value1=num2[i]-'0',value2;
+            for(int j=0;j<num1.length();j++){
+                value2=num1[j]-'0';
+                sum=value1*value2+l;
+                char a=sum%10+'0';
+                l=sum/10;
+                s+=a;
+            }
+            if(l!=0)
+                s+=l+'0';
+            //开始进行相加
+            if(i==0){
+                ans.append(s);
+            }
+            else{
+                l=0;//保存进位
+                sum=0;
+                for(int j=0;j<ans.length();j++){
+                    if(j<s.length()){
+                        sum=(ans[j]-'0')+(s[j]-'0')+l;
+                        ans[j]=sum%10+'0';
+                        l=sum/10;
+                    }
+                    else{
+                        sum=(ans[j]-'0')+l;
+                        ans[j]=sum%10+'0';
+                        l=sum/10;
+                    }
+                }
+                if(l>0)
+                    ans+='1';
+            }
+            i++;
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }

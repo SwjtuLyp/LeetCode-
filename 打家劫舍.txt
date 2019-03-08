@@ -1,0 +1,15 @@
+int max(int a,int b){
+        return a>b?a:b;
+    }
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        if(n==0)
+            return 0;
+        int C[n+1];
+        C[0]=0;
+        C[1]=nums[0];
+        for(int i=1;i<n;i++){
+            C[i+1]=max(C[i],C[i-1]+nums[i]);
+        }
+        return C[n];
+    }

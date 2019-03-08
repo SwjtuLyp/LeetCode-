@@ -1,0 +1,36 @@
+//这里要记住unordered_map不支持pair类型作为键
+//掌握用辗转相除法求最大公因数
+class Solution {
+public:
+    //辗转相除法
+    int gcd(int a, int b)
+    {
+        if(b == 0)
+            return a;
+        else
+            return gcd(b, a % b);
+    }
+    int max(int a,int b){
+        return a>b?a:b;
+    }
+    int maxPoints(vector<Point>& points) {
+        int ans=0;
+        for(int i=0;i<points.size();i++){
+            map<pair<int,int>,int> m;
+            int res=0;
+            int simple=0;
+            for(int j=i+1;j<points.size();j++){
+                if(points[i].x==points[j].x&&points[i].y==points[j].y){
+                    simple++;
+                }else{
+                    int diff=gcd(points[i].x-points[j].x,points[i].y-points[j].y);
+                    int diffx=(points[i].x-points[j].x)/diff;
+                    int diffy=(points[i].y-points[j].y)/diff;
+                    res=max(res,++m[std::make_pair(diffx,diffy)]);
+                }
+            }
+            ans=max(ans,res+simple+1);
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,35 @@
+//哈希，双指针，在寻找的同时也在优化
+string minWindow(string s, string t) {
+        int T[256]={0};
+        int S[256]={0};
+        string ans="";
+        int count=0;
+        int min=s.length()+1;
+        int i;
+        int j=0;
+        if(t.length()>s.length())
+            return "";
+        for(int i=0;i<t.length();i++){
+            T[t[i]]++;
+        }
+        for(i=0;i<s.length();i++){
+            if(T[s[i]]!=0){
+                S[s[i]]++;
+                if(S[s[i]]<=T[s[i]])
+                    count++;
+                while(count==t.length()){
+                    if(i-j+1<min){
+                        min=i-j+1;
+                        ans=s.substr(j,min);
+                    }
+                    if(T[s[j]]!=0){
+                        S[s[j]]--;
+                        if(S[s[j]]<T[s[j]])
+                            count--;
+                    }
+                    j++;
+                }
+            }
+        }
+        return ans;
+    }

@@ -1,0 +1,37 @@
+//通过排序数组来降低时间复杂度
+int abs(int num)
+    {
+        return num>0?num:-num;
+    }
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        int i=0,j=0,k,m,l;
+        int min=10000,sum=0;
+        int now;
+        if(nums.size()==0)
+            return 0;
+        while(i<nums.size()-1)
+        {
+                k=i+1;
+                m=nums.size()-1;
+                while(k<m)
+                {
+                    int total=nums[k]+nums[i]+nums[m]-target;
+                    now=abs(nums[k]+nums[i]+nums[m]-target);
+                    if(now<min)
+                    {
+                        min=now;
+                        sum=nums[k]+nums[i]+nums[m];
+                    }
+                   if(total>0)
+                       m--;
+                    else
+                        if(total<0)
+                            k++;
+                        else
+                            return target;
+                }
+            i++;
+        }
+        return sum;
+    }

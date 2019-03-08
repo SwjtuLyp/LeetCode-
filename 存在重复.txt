@@ -1,0 +1,15 @@
+ bool containsDuplicate(vector<int>& nums) {
+       //要善于利用排序方法，来解题
+        if(nums.size()==0)
+            return false;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size()-1;i++){
+            for(int j=i+1;j<nums.size();j++){
+                if(nums[j]==nums[i])
+                    return true;
+                else if(nums[j]>nums[i])
+                        break;
+            }
+        }
+        return false;
+    }

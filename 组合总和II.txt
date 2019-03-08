@@ -1,0 +1,30 @@
+vector<int>s;//用于存放值
+    void recursion(vector<vector<int>> &ans,vector<int>& candidates,int start,int target)
+    {
+        for(int i=start;i<candidates.size();i++)
+        {
+            //这一步是与第一问的主要区别，用于排除相同选择！
+            while(i>start&&candidates[i]==candidates[i-1])
+                i++;
+            if(target<candidates[i])
+                return;
+            if(target==candidates[i])
+            {
+                s.push_back(candidates[i]);
+                ans.push_back(s);
+                s.pop_back();
+            }
+            else
+            {
+                s.push_back(candidates[i]);
+                recursion(ans,candidates,i+1,target-candidates[i]);
+                s.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>>ans;
+        sort(candidates.begin(),candidates.end());
+        recursion(ans,candidates,0,target);
+        return ans;
+    }

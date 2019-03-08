@@ -1,0 +1,17 @@
+void rotate(vector<vector<int>>& A) {
+        int n=A.size();
+        if(n==0)
+            return;
+        for(int i=0;i<n-1;i++){
+            for(int j=i;j<n-i-1;j++){
+                int key1=A[i][j];
+                int key2=A[j][n-i-1];
+                int key3=A[n-i-1][n-j-1];
+                int key4=A[n-j-1][i];
+                A[i][j]=key4;
+                A[j][n-i-1]=key1;
+                A[n-i-1][n-j-1]=key2;
+                A[n-j-1][i]=key3;
+            }
+        }
+    }

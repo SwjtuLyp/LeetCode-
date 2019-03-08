@@ -1,0 +1,30 @@
+int coinChange(vector<int>& coins, int amount) {
+        int size=coins.size();
+        if(coins.size()==0)
+            return -1;
+        if(amount==0)
+            return 0;
+        sort(coins.begin(),coins.end());
+        int C[amount+1];
+        for(int i=0;i<=amount;i++){
+            C[i]=INT_MAX-1;
+        }
+        for(int i=0;i<size;i++){
+            if(coins[i]<=amount)
+                C[coins[i]]=1;
+        }
+        for(int i=coins[0];i<=amount;i++){
+            int min=C[i];
+            for(int j=0;j<size;j++){
+                if(i-coins[j]>=0){
+                    if(C[i-coins[j]]+1<min){
+                        C[i]=C[i-coins[j]]+1;
+                        min=C[i];
+                    }
+                }
+                else
+                    break;
+            }
+        }
+        return C[amount]==INT_MAX-1?-1:C[amount];
+    }

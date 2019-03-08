@@ -1,0 +1,104 @@
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string ans;
+        if(root==NULL)
+            return ans;
+        queue<TreeNode*>q1;
+        q1.push(root);
+        bool l=true;
+        while((!q1.empty())&&l){
+            queue<TreeNode*>q2;
+            l=false;
+            while(!q1.empty()){
+                TreeNode* x=q1.front();
+                q1.pop();
+                if(x==NULL){
+                    ans+="#";
+                    ans+=',';
+                }
+                else{
+                    ans+=to_string(x->val);
+                    ans+=',';
+                    if(x->left)
+                        l=true;
+                    if(x->right)
+                        l=true;
+                    q2.push(x->left);
+                    q2.push(x->right);
+                }
+            }
+            q1=q2;
+        }
+        return ans;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if(data.size()==0)
+            return NULL;
+        cout<<data<<endl;
+        queue<TreeNode*>q1;
+        TreeNode* x=(TreeNode*)malloc(sizeof(TreeNode));
+        q1.push(x);
+        string str="";
+        vector<string> nums;
+        for(int i=0;i<data.size();i++){
+            if(data[i]==','){
+                nums.push_back(str);
+                str="";
+                continue;
+            }
+            else{
+                if(data[i]=='#'){
+                    nums.push_back("#");
+                    i++;
+                    str="";
+                    continue;
+                }
+                else
+                {
+                    str+=data[i];
+                }
+            }
+        }
+        //cout<<stoll(nums[5]);
+        //判断字符串相等的地方出了问题
+        
+        //已经把数放进vector数组中了
+        TreeNode *root=new TreeNode(stoll(nums[0]));
+        queue<TreeNode*> q;
+        q.push(root);
+        int i=0;
+        while(!q.empty()){
+            TreeNode* r=q.front();
+            q.pop();
+            
+            if(i+1<nums.size()){
+                i++;
+                
+                if(nums[i]!="#"){
+                    TreeNode* rl=new TreeNode(stoll(nums[i]));
+                    r->left=rl;
+                    q.push(rl);
+                }
+            }
+            else
+                break;
+            if(i+1<nums.size()){
+                i++;
+                if(nums[i]!="#"){
+                    TreeNode* rr=new TreeNode(stoll(nums[i]));
+                    r->right=rr;
+                    q.push(rr);
+                }
+
+            }
+            else
+                break;
+        }
+        return root;
+    }
+};

@@ -1,0 +1,108 @@
+class LRUCache {
+public:
+    struct ListNode{
+        int key;
+        int value;
+        ListNode* next;
+        ListNode* pre;
+        ListNode(int k,int v):key(k),value(v),next(NULL),pre(NULL){};
+    };
+    struct Value{
+        ListNode *p;
+        int val;
+        Value(int v,ListNode *pp):val(v),p(pp){};
+        Value(){};
+    };
+    int capacity;
+    int capacity_cur;
+    ListNode* head;
+    unordered_map<int,Value>mkv;
+    //map<int,Value>::iterator it;
+    //今天下午把这道题弄懂
+    LRUCache(int capacity) {
+        this->capacity=capacity;
+        head=new ListNode(0,0);
+        capacity_cur=0;
+    }
+    
+    int get(int key) {
+        if(is_exist(key)){
+            ListNode* loc=mkv[key].p;
+            //先删除节点
+            loc->pre->next=loc->next;
+            loc->next->pre=loc->pre;
+            //将节点移至开头
+            loc->next=head->next;
+            loc->pre=head;
+            loc->next->pre=loc;
+            head->next=loc;
+            //返回节点
+            return mkv[key].val;
+        }
+        else{
+            return -1;
+        }
+    }
+    
+    void put(int key, int value) {
+        //存在的情况
+        if(is_exist(key)){
+            mkv[key].val=value;
+            ListNode*q=mkv[key].p;
+            q->value=value;
+            //问题在这儿，存在也要往前移
+            //先删除
+            q->next->pre=q->pre;
+            q->pre->next=q->next;
+            //再前移
+            q->next=head->next;
+            head->next->pre=q;
+            head->next=q;
+            q->pre=head;
+           
+            return;
+        }
+        ListNode *tmp=new ListNode(key,value);
+        if(capacity_cur<capacity){
+            if(head->next==NULL){
+                //目前是第一个；先插入链表中
+                
+                head->next=tmp;
+                tmp->next=head;
+                head->pre=tmp;
+                tmp->pre=head;
+                Value t(value,tmp);
+                mkv[key]=t;
+                capacity_cur++;
+            }
+            else{
+                tmp->next=head->next;
+                head->next->pre=tmp;
+                head->next=tmp;
+                tmp->pre=head;
+                Value t(value,tmp);
+                mkv[key]=t;
+                capacity_cur++;
+            }
+        }
+        else{
+            //删除掉最后一个节点；
+            ListNode* tail=head->pre;
+            tail->pre->next=head;
+            head->pre=tail->pre;
+            mkv.erase(tail->key);
+            delete tail;
+            //把节点插入head后
+            tmp->next=head->next;
+            head->next->pre=tmp;
+            head->next=tmp;
+            tmp->pre=head;
+            Value t(value,tmp);
+            mkv[key]=t;
+        }
+        
+    }
+    bool is_exist(int key){
+        return (mkv.find(key)!=mkv.end());
+    }
+};

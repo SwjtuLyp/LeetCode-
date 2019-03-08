@@ -1,0 +1,29 @@
+RandomListNode *copyRandomList(RandomListNode *head) {
+        if(head==NULL)
+            return NULL;
+        unordered_map<RandomListNode*,int>map1;
+        unordered_map<int,RandomListNode*>map2;
+        map1[NULL]=0;
+        map2[0]=NULL;
+        RandomListNode* p=head;
+        int i=1;
+        while(p){
+            map1[p]=i;
+            RandomListNode* x=new RandomListNode(p->label);
+            map2[i]=x;
+            if(i!=1)
+                map2[i-1]->next=x;
+            i++;
+            p=p->next;
+        }  
+        RandomListNode* p1=head;
+        i=1;
+        while(p1){
+            int l=map1[p1->random];
+            map2[i]->random=map2[l];
+            
+            i++;
+            p1=p1->next;
+        }
+        return map2[1];
+    }

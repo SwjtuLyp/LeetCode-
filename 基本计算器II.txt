@@ -1,0 +1,72 @@
+int calculate(string s) {
+        string sa;
+        for(int i=0;i<s.size();i++){
+            if(s[i]!=' ')
+                sa+=s[i];
+        }
+        stack<string>s1;
+        stack<string>s2;
+        string r;
+        vector<string> res;
+        for(int i=0;i<sa.size();i++){
+            if('0'<=sa[i]&&sa[i]<='9'){
+                r+=sa[i];
+            }
+            else{
+                res.push_back(r);
+                r="";
+                r+=sa[i];
+                res.push_back(r);
+                r="";
+            }
+        }
+        res.push_back(r);
+        for(int i=res.size()-1;i>=0;i--){
+            s1.push(res[i]);
+        }
+        
+        while(!s1.empty()){
+            string s=s1.top();
+            s1.pop();
+            if(s=="*"){
+                string s=to_string(stoll(s1.top())*stoll(s2.top()));
+                s1.pop();
+                s2.pop();
+                s2.push(s);
+                continue;
+            }
+            if(s=="/"){
+                string s=to_string(stoll(s2.top())/stoll(s1.top()));
+                s1.pop();
+                s2.pop();
+                s2.push(s);
+                continue;
+            }
+            s2.push(s);
+        }
+        
+        while(!s2.empty()){
+            s1.push(s2.top());
+            s2.pop();
+        }
+        while(!s1.empty()){
+            string s=s1.top();
+            s1.pop();
+            if(s=="+"){
+                string s=to_string(stoll(s1.top())+stoll(s2.top()));
+                s1.pop();
+                s2.pop();
+                s2.push(s);
+                continue;
+            }
+            if(s=="-"){
+                string s=to_string(stoll(s2.top())-stoll(s1.top()));
+                s1.pop();
+                s2.pop();
+                s2.push(s);
+                continue;
+            }
+            s2.push(s);
+        }
+        return stoll(s2.top());
+    }

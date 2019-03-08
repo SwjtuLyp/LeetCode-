@@ -1,0 +1,16 @@
+ int firstMissingPositive(vector<int>& nums) {
+        int length=nums.size();
+        for(int i=0;i<length;i++)
+        {
+            //要注意这里为什么是while循环，因为存在无法将i所在的这个位置一次匹配完成的情况
+            //比如你从其他索引处换过来的数还需要进行下一次的交换
+            while(nums[i]>0&&nums[i]<=length&&nums[i]!=nums[nums[i]-1])
+                swap(nums[i],nums[nums[i]-1]);
+        }
+        for(int i=0;i<length;i++)
+        {
+            if(nums[i]!=i+1)
+                return i+1;
+        }
+        return length+1;
+    }

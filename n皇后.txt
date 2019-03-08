@@ -1,0 +1,41 @@
+ int abs(int a){
+        return a>0?a:-a;
+    }
+    int p[100];
+    vector<vector<string>> a;
+    void dfs(int m,int n){
+        if(m==n)
+        {
+            vector<string>s;
+            for(int i=0;i<n;i++){
+                string s0="";
+                for(int j=0;j<n;j++){
+                    if(j!=p[i])
+                        s0+='.';
+                    else
+                        s0+='Q';
+                }
+                s.push_back(s0);
+            }
+            a.push_back(s);
+            return;
+        }
+        for(int i=0;i<n;i++){
+            int j;
+            for(j=0;j<m;j++){
+                if(p[j]==i||abs(j-m)==abs(p[j]-i))
+                    break;
+            }
+            if(j==m)
+            {
+                p[m]=i;
+                dfs(m+1,n);
+            }
+        }
+        
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        
+        dfs(0,n);
+        return a;
+    }

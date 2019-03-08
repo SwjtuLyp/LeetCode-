@@ -1,0 +1,108 @@
+
+代码写得比较不好读，，，
+    char board1[9][9];
+    int D[9][9]={{0}}; //用来存放数独值
+    int Ds[9][9]={{0}};//标志数组，用于判断这个位置的值能否被更改
+    void dfs(int m,int n)
+    {
+        //m是行，n是列；
+        //每一行列出现一次
+        int d[9][10]={0};//用于判断每个3X3小格子里的数独是否成立
+        int r[10]={0};
+        int c[10]={0};
+        
+        while(Ds[m][n]==1&&m<9)
+        {
+            n++;
+            m+=n/9;
+            n=n%9;
+        }
+        if(m==9)
+        {
+            for(int i=0;i<9;i++)
+            {
+                for(int j=0;j<9;j++)
+                {
+                    board1[i][j]=D[i][j]+'0';
+                }
+            }   
+            return;
+        }
+        //判断3X3数独是否合理
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+                d[i/3*3+j/3][D[i][j]]=1;
+        }
+        //判断行列是否合理
+        for(int i=0;i<9;i++)
+        {
+            r[D[m][i]]=1;
+            c[D[i][n]]=1;
+        }
+        for(int i=1;i<=9;i++)
+        {
+            if(r[i]==0&&c[i]==0&&d[m/3*3+n/3][i]==0)
+            {
+                if(m==8&&n==8)
+                {
+                    D[m][n]=i;
+                    //在这儿写变换条件；
+                    for(int i=0;i<9;i++)
+                    {
+                        for(int j=0;j<9;j++)
+                        {
+                            board1[i][j]=D[i][j]+'0';
+                        }
+                    }   
+                        return;
+                }
+                else
+                {
+                    if(n==8)
+                    {   
+                        D[m][n]=i;
+                        dfs(m+1,0);
+                        D[m][n]=0;
+                    }
+                    else
+                    {
+                        D[m][n]=i;
+                        dfs(m,n+1);
+                        D[m][n]=0;
+                    }
+            
+                }
+            }
+        }
+    }
+    void solveSudoku(vector<vector<char>>& board) {
+        //先要有一个二维数组保存每个空格的值，如果是点就为0；
+        //再用一个一维数组保存每个数字，在第一组中被用过了没有；
+        //int r[10];
+        //int c[10]
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                if(board[i][j]=='.')
+                {   
+                    Ds[i][j]=0;
+                    D[i][j]=0;
+                }
+                else
+                {
+                    Ds[i][j]=1;
+                    D[i][j]=board[i][j]-'0';
+                }
+            }
+        }
+        dfs(0,0);
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                board[i][j]=board1[i][j];
+            }
+        }
+    }

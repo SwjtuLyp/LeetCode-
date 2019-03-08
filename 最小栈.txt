@@ -1,0 +1,32 @@
+//此题要求常数空间找到最小值，用两个栈，一个保存值，另一个保存最小值
+    stack<int >s1;//保存所有数据
+    stack<int >s2;//保存最小值
+    MinStack() {
+        
+    }
+    
+    void push(int x) {
+        if(s1.empty())
+            s2.push(x);
+        else{
+            if(s2.top()>=x)
+                s2.push(x);
+        }
+        s1.push(x);
+    }
+    
+    void pop() {
+        if(!s1.empty()){
+            if(s1.top()==s2.top())
+                s2.pop();
+            s1.pop();
+        }
+    }
+    
+    int top() {
+        return s1.top();
+    }
+    
+    int getMin() {
+        return s2.top();
+    }

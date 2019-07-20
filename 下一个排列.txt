@@ -1,0 +1,66 @@
+class Solution {
+public:
+    void mysort(vector<int>& nums,int str,int end){
+        for(int i=str;i<end;i++){
+            for(int j=i+1;j<end;j++){
+                if(nums[i]>nums[j]){
+                    int x=nums[j];
+                    nums[j]=nums[i];
+                    nums[i]=x;
+                }
+            }
+        }
+    }
+    
+    void mysort2(vector<int>& nums,int str,int end){
+        for(int i=str;i<end;i++){
+            for(int j=i+1;j<end;j++){
+                if(nums[i]<nums[j]){
+                    int x=nums[j];
+                    nums[j]=nums[i];
+                    nums[i]=x;
+                }
+            }
+        }
+    }
+    
+    void nextPermutation(vector<int>& nums) {
+        
+        int k=-1;
+        for(int i=0;i<nums.size()-1;i++){
+            if(nums[i]<nums[i+1]){
+                k=i;
+            }
+        }
+        
+        if(k==-1){
+            //倒序输出
+            //为加快刷题速度所以直接用得冒泡排序，可以使用其他排序做优化            
+            for(int i=0;i<nums.size();i++){
+                for(int j=i+1;j<nums.size();j++){
+                    if(nums[i]>nums[j]){
+                        int x=nums[j];
+                        nums[j]=nums[i];
+                        nums[i]=x;
+                     }
+                }
+            }      
+            
+            return;
+        }
+        int z=k+1;
+        for(int i=k+1;i<nums.size();i++){
+            if(nums[i]>nums[k]){
+                if(nums[i]<nums[z]){
+                    z=i;
+                }
+            }
+        }
+        
+        int x=nums[z];
+        nums[z]=nums[k];
+        nums[k]=x;
+        mysort(nums,k+1,nums.size());
+        
+    }
+};

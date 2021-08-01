@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+        head = new ListNode(Integer.MIN_VALUE, head);
+        ListNode node = head;
+
+        // 找到比x大的节点 的 前一个节点 Node
+        while (node.next != null && node.next.val < x) {
+            node = node.next;
+        }
+
+        ListNode index = node;
+        while (index.next != null) {
+            if (index.next.val < x) {
+                // 需要被交换的节点
+                ListNode swapNode = index.next;
+
+                // 在链表中删除swapNode
+                index.next = index.next.next;
+                
+                // 把新加的节点放到Node后面
+                node.next = new ListNode(swapNode.val, node.next);
+                node = node.next;
+                
+            } else {
+                index = index.next;
+            }
+        }
+        return head.next;
+    }
+}

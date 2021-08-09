@@ -1,0 +1,57 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+
+        List<TreeNode> ans = new ArrayList<>();
+        // 左边是比他小的，右边是比他大的
+        for(int i = 1; i < n+1; i ++) {
+                List<TreeNode> leftNodes = generateTrees(1, i-1);
+                List<TreeNode> rightNodes = generateTrees(i + 1, n);
+                for (TreeNode leftNode : leftNodes) {
+                    for (TreeNode rightNode : rightNodes) {
+                        ans.add(new TreeNode(i, leftNode, rightNode));
+                    }
+                }
+            
+        }
+        return ans;
+    }
+
+    public List<TreeNode> generateTrees(int start, int end) {
+        List<TreeNode> ans = new ArrayList<>();
+        if (start > end) {
+            ans.add(null);
+            return ans;
+        }
+        if (start == end) {
+            ans.add(new TreeNode(start));
+            return ans;
+        }
+        
+        for (int i = start; i <= end; i ++) {
+                List<TreeNode> leftNodes = generateTrees(start, i-1);
+                List<TreeNode> rightNodes = generateTrees(i + 1, end);
+                for (TreeNode leftNode : leftNodes) {
+                    for (TreeNode rightNode : rightNodes) {
+                        ans.add(new TreeNode(i, leftNode, rightNode));
+                    }
+                }
+            
+        }
+        return ans;
+    }
+}
